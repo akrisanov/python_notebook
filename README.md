@@ -47,6 +47,10 @@ sphinx-build doc/source doc/build
 sphinx-build -b doctest doc/source doc/build
 ```
 
+## Notes in Russian 🇷🇺
+
+* [Являются ли list comprehensions в Python идиоматическими?](ru/are-list-comprehensions-pythonic.ru.md)
+
 ## Copyright
 
 Copyright (C) 2019 Andrey Krisanov. The notebook is licensed and distributed under the MIT license.
