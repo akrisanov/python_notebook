@@ -4,6 +4,23 @@
 jupyter notebook
 ```
 
+## Virtual Environment
+
+```shell
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+## REPL
+
+Visual Studio Code: `Cmd + Shift + P` -> `Python: Start REPL`:
+
+```shell
+>>> help(str)
+
+>>> help(str.upper)
+```
+
 ## The History of Python
 
 * [Guido van Rossum: The Early Years of Python](https://youtu.be/xLVxoz-mQFs)
