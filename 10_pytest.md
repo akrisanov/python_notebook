@@ -1,5 +1,15 @@
 # pytest
 
+## Resources
+
+* [Full pytest documentation](https://docs.pytest.org/en/latest/contents.html#)
+* [pytest-cache documentation](http://pythonhosted.org/pytest-cache/)
+* [Working with custom markers](https://docs.pytest.org/en/latest/example/markers.html)
+* [pytest fixtures, parameterized fixtures](https://docs.pytest.org/en/latest/fixture.html)
+* [pytest-xdist – Running Tests In Parallel](https://pypi.org/project/pytest-xdist/)
+
+## Running Tests
+
 | Command                                      | Description                                         |
 | -------------------------------------------- | --------------------------------------------------- |
 | pip3 install pytest pytest-cache pytest-pep8 | Install pytest                                      |
@@ -19,11 +29,3 @@ pytest.skip()
 @pytest.mark.skip
 @pytest.mark.skipif
 ```
-
-## Resources
-
-* [pytest documentation](http://pytest.org/latest/contents.html#toc)
-* [pytest-cache documentation](http://pythonhosted.org/pytest-cache/)
-* [Working with custom markers](https://docs.pytest.org/en/latest/example/markers.html)
-* [pytest fixtures, parameterized fixtures](https://docs.pytest.org/en/latest/fixture.html)
-* [pytest-xdist – Running Tests In Parallel](https://pypi.org/project/pytest-xdist/)
