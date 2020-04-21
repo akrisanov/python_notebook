@@ -3,6 +3,9 @@ import time
 
 
 def count_to_zero(num):
+    """
+    This example illustrates how bad Python is for such tasks.
+    """
     while num > 0:
         num -= 1
 
