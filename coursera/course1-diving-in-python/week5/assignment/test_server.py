@@ -9,7 +9,8 @@ print("Соединение установлено:", addr)
 
 # response = b"ok\npalm.cpu 10.5 1501864247\neardrum.cpu 15.3 1501864259\n\n"
 # response = b"error\nwrong command\n\n"
-response = b"ok\nserver_wrong_answer_1 15 1111\n\n"
+# response = b"ok\nserver_wrong_answer_1 15 1111\n\n"
+response = b"ok\nunsorted_data 13.045 1501865247\nunsorted_data 10.5 1501864247\nunsorted_data 11.0 1501864243\nunsorted_data 22.5 1501864248\n\n"
 
 try:
     while True:

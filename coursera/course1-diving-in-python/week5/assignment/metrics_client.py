@@ -1,3 +1,4 @@
+import bisect
 import socket
 import time
 from typing import Dict, List, Tuple, Union
@@ -22,7 +23,32 @@ class Client:
         :param port:
         :param timeout: необязательный параметр
         """
-        self.sock = socket.create_connection((host, port), timeout=timeout)
+        try:
+            self.sock = socket.create_connection((host, port), timeout=timeout)
+        except socket.error as e:
+            raise ClientError("Cannot create a new connection to the server.", e)
+
+    def _send(self, command):
+        """
+        Отправляет сообщение на сервер.
+
+        :param command: имя команды
+        """
+        try:
+            self.sock.sendall(command)
+        except socket.error as e:
+            raise ClientError(f"Cannot send the {command} command:", e)
+
+    def _recv(self):
+        b = b""
+
+        while not b.endswith(b"\n\n"):
+            try:
+                b += self.sock.recv(1024)
+            except socket.error as e:
+                raise ClientError(f"Cannot receive data from the server:", e)
+
+        return b
 
     def __del__(self):
         self.sock.close()
@@ -65,8 +91,8 @@ class Client:
         if not len(row) == 3:
             raise ClientError("wrong data")
 
-        if not len(row[0].split(".")) == 2:  # check metric name
-            raise ClientError("wrong command")
+        # if not len(row[0].split(".")) == 2:  # check metric name
+        #     raise ClientError("wrong command")
 
         return row
 
@@ -96,10 +122,9 @@ class Client:
                 typed_metric = (int(timestamp), float(value))
 
                 if name not in payload:
-                    payload[name] = [typed_metric]
-                else:
-                    payload[name].append(typed_metric)
-                    payload[name].sort(key=lambda v: v[0])  # timestamp
+                    payload[name] = []
+
+                bisect.insort(payload[name], typed_metric)
 
         return status, payload
 
@@ -112,9 +137,9 @@ class Client:
         исключение `ClientError` в случае не успешного.
         """
         command = f"get {metric}\n".encode()
-        self.sock.sendall(command)
+        self._send(command)
 
-        raw_data = self.sock.recv(1024)
+        raw_data = self._recv()
         status, payload = self.deserialize(raw_data)
         self.check_error(status, payload)
 
@@ -130,11 +155,17 @@ class Client:
         """
         timestamp = timestamp or int(time.time())
         command = f"put {metric} {value} {timestamp}\n".encode()
-        self.sock.sendall(command)
+        self._send(command)
 
-        raw_resp = self.sock.recv(1024)
+        raw_resp = self._recv()
         status, payload = self.deserialize(raw_resp)
         self.check_error(status, payload)
+
+    def close(self):
+        try:
+            self.sock.close()
+        except socket.error as e:
+            raise ClientError("Cannot close the connection:", e)
 
 
 if __name__ == "__main__":
