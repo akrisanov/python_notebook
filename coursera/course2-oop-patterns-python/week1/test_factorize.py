@@ -12,9 +12,9 @@ def factorize(x):
 
 class TestFactorize(unittest.TestCase):
     def _assertCases(self, cases):
-        for x, result in cases.items():
+        for x, expected in cases:
             with self.subTest(x=x):
-                self.assertEqual(factorize(x), result)
+                self.assertEqual(factorize(x), expected)
 
     def test_wrong_types_raise_exception(self):
         cases = ('string', 1.5)
@@ -29,17 +29,31 @@ class TestFactorize(unittest.TestCase):
                 self.assertRaises(ValueError, factorize, x)
 
     def test_zero_and_one_cases(self):
-        cases = {0: (0,), 1: (1,)}
+        cases = (
+            (0, (0,)),
+            (1, (1,)),
+        )
         self._assertCases(cases)
 
     def test_simple_numbers(self):
-        cases = {3: (3,), 13: (13,), 29: (29,)}
+        cases = (
+            (3, (3,)),
+            (13, (13,)),
+            (29, (29,)),
+        )
         self._assertCases(cases)
 
     def test_two_simple_multipliers(self):
-        cases = {6: (2, 3), 26: (2, 13), 121: (11, 11)}
+        cases = (
+            (6, (2, 3)),
+            (26, (2, 13)),
+            (121, (11, 11)),
+        )
         self._assertCases(cases)
 
     def test_many_multipliers(self):
-        cases = {1001: (7, 11, 13), 9699690: (2, 3, 5, 7, 11, 13, 17, 19)}
+        cases = (
+            (1001, (7, 11, 13)),
+            (9699690, (2, 3, 5, 7, 11, 13, 17, 19)),
+        )
         self._assertCases(cases)
